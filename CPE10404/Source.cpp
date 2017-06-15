@@ -7,9 +7,8 @@ int main(void)
 {
 	while (true)
 	{
-		int a = 0, b = 0, temp = 0, counta = 0, countb = 0, carry = 0;
+		int a = 0, b = 0, temp = 0, counta = 0, countb = 0, countmin = 0, carry = 0;
 		int *arra, *arrb;
-		bool flag = false;
 
 		scanf("%d %d", &a, &b);
 		if ((a == 0) && (b == 0)) break;
@@ -42,20 +41,32 @@ int main(void)
 			b /= 10;
 		}
 
-		if (counta > countb) counta = countb;
-		for (int i = 0; i < counta; i++)
+		if (counta > countb) countmin = countb;
+		else countmin = counta;
+
+		for (int i = 0; i < countmin; i++)
 		{
-			if (flag)
-			{
-				arra[i]++;
-				flag = false;
-			}
 			arra[i] += arrb[i];
 			if (arra[i] >= 10)
 			{
-				arra[i] -= 10;
 				carry++;
-				flag = true;
+				if (i == countmin - 1)
+				{
+					if (counta > countb)
+					{
+						if (arra[countmin] == 9)
+						{
+							carry++;
+						}
+					}
+					else if (counta < countb)
+					{
+						if (arrb[countmin] == 9)
+						{
+							carry++;
+						}
+					}
+				}
 			}
 		}
 
